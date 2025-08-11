@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby Name Curator</title>
+    <meta name="theme-color" content="#E91E63">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+        
+        .filter-section {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .card-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .name-card {
+            width: 300px;
+            height: 400px;
+            background: white;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .name-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+        
+        .name-text {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .gender-text {
+            font-size: 1.2rem;
+            color: #666;
+            background: #f0f0f0;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px 0;
+        }
+        
+        .btn {
+            width: 70px;
+            height: 70px;
+            border: none;
+            border-radius: 50%;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .btn:active {
+            transform: scale(0.95);
+        }
+        
+        .reject-btn {
+            background: #f44336;
+            box-shadow: 0 4px 15px rgba(244, 67, 54, 0.4);
+        }
+        
+        .heart-btn {
+            background: #e91e63;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
+        }
+        
+        .control-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .control-btn {
+            background: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .control-btn:hover {
+            background: #f5f5f5;
+            transform: translateY(-2px);
+        }
+        
+        .control-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .view-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .view-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .hearts-btn {
+            background: #e91e63;
+        }
+        
+        .rejects-btn {
+            background: #f44336;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background: white;
+            margin: 10% auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 15px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .close {
+            font-size: 2rem;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .name-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .name-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        
+        .remove-btn {
+            background: #666;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        
+        .empty-state {
+            text-align: center;
+            color: #666;
+            font-size: 1.2rem;
+            margin: 50px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👶 Baby Name Curator</h1>
+            <p>Swipe through names like Tinder!</p>
+        </div>
+        
+        <div class="filter-section">
+            <label for="genderFilter">Filter by gender:</label>
+            <select id="genderFilter" onchange="loadNames()">
+                <option value="All">All</option>
+                <option value="Boy">Boy</option>
+                <option value="Girl">Girl</option>
+                <option value="Unisex">Unisex</option>
+            </select>
+        </div>
+        
+        <div class="card-container">
+            <div class="name-card" id="nameCard">
+                <div class="name-text" id="nameText">Loading...</div>
+                <div class="gender-text" id="genderText"></div>
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <button class="btn reject-btn" onclick="rejectName()">✕</button>
+            <button class="btn heart-btn" onclick="heartName()">♥</button>
+        </div>
+        
+        <div class="control-buttons">
+            <button class="control-btn" id="undoBtn" onclick="undoLastAction()" disabled>
+                ↺ Undo Last Choice
+            </button>
+            
+            <div class="view-buttons">
+                <button class="view-btn hearts-btn" onclick="showHeartedNames()">
+                    ♥ Hearted (<span id="heartedCount">0</span>)
+                </button>
+                <button class="view-btn rejects-btn" onclick="showRejectedNames()">
+                    ✕ Rejected (<span id="rejectedCount">0</span>)
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for showing lists -->
+    <div id="nameModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Names</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div>
+                <label for="modalGenderFilter">Filter:</label>
+                <select id="modalGenderFilter" onchange="filterModalList()">
+                    <option value="All">All</option>
+                    <option value="Boy">Boy</option>
+                    <option value="Girl">Girl</option>
+                    <option value="Unisex">Unisex</option>
+                </select>
+            </div>
+            <div id="nameList" class="name-list"></div>
+        </div>
+    </div>
+
+    <script>
+        // Baby names database
+        const babyNames = [
+            {name: "Emma", gender: "Girl"}, {name: "Liam", gender: "Boy"},
+            {name: "Olivia", gender: "Girl"}, {name: "Noah", gender: "Boy"},
+            {name: "Ava", gender: "Girl"}, {name: "Ethan", gender: "Boy"},
+            {name: "Sophia", gender: "Girl"}, {name: "Mason", gender: "Boy"},
+            {name: "Isabella", gender: "Girl"}, {name: "William", gender: "Boy"},
+            {name: "Mia", gender: "Girl"}, {name: "James", gender: "Boy"},
+            {name: "Charlotte", gender: "Girl"}, {name: "Benjamin", gender: "Boy"},
+            {name: "Amelia", gender: "Girl"}, {name: "Lucas", gender: "Boy"},
+            {name: "Harper", gender: "Girl"}, {name: "Henry", gender: "Boy"},
+            {name: "Evelyn", gender: "Girl"}, {name: "Alexander", gender: "Boy"},
+            {name: "Abigail", gender: "Girl"}, {name: "Michael", gender: "Boy"},
+            {name: "Emily", gender: "Girl"}, {name: "Daniel", gender: "Boy"},
+            {name: "Elizabeth", gender: "Girl"}, {name: "Jacob", gender: "Boy"},
+            {name: "Sofia", gender: "Girl"}, {name: "Logan", gender: "Boy"},
+            {name: "Avery", gender: "Girl"}, {name: "Jackson", gender: "Boy"},
+            {name: "Ella", gender: "Girl"}, {name: "Sebastian", gender: "Boy"},
+            {name: "Scarlett", gender: "Girl"}, {name: "Jack", gender: "Boy"},
+            {name: "Grace", gender: "Girl"}, {name: "Owen", gender: "Boy"},
+            {name: "Chloe", gender: "Girl"}, {name: "Theodore", gender: "Boy"},
+            {name: "Victoria", gender: "Girl"}, {name: "Aiden", gender: "Boy"},
+            {name: "Riley", gender: "Unisex"}, {name: "Jordan", gender: "Unisex"},
+            {name: "Taylor", gender: "Unisex"}, {name: "Casey", gender: "Unisex"},
+            {name: "Morgan", gender: "Unisex"}, {name: "Sage", gender: "Unisex"},
+            {name: "River", gender: "Unisex"}, {name: "Blake", gender: "Unisex"},
+            {name: "Rowan", gender: "Unisex"}, {name: "Skylar", gender: "Unisex"},
+            {name: "Parker", gender: "Unisex"}, {name: "Quinn", gender: "Unisex"},
+            {name: "Cameron", gender: "Unisex"}, {name: "Hayden", gender: "Unisex"},
+            {name: "Peyton", gender: "Unisex"}, {name: "Reese", gender: "Unisex"},
+            {name: "Jamie", gender: "Unisex"}, {name: "Drew", gender: "Unisex"},
+            {name: "Dakota", gender: "Unisex"}, {name: "Charlie", gender: "Unisex"}
+        ];
+        
+        let currentNames = [];
+        let currentIndex = 0;
+        let actionHistory = [];
+        let currentModalType = '';
+        
+        // Load saved data
+        function loadSavedData() {
+            const saved = localStorage.getItem('babyNameChoices');
+            return saved ? JSON.parse(saved) : {};
+        }
+        
+        // Save data
+        function saveData(choices) {
+            localStorage.setItem('babyNameChoices', JSON.stringify(choices));
+        }
+        
+        // Get name status
+        function getNameStatus(name) {
+            const choices = loadSavedData();
+            return choices[name] || 'unrated';
+        }
+        
+        // Update name status
+        function updateNameStatus(name, status) {
+            const choices = loadSavedData();
+            choices[name] = status;
+            saveData(choices);
+        }
+        
+        // Load names based on filter
+        function loadNames() {
+            const genderFilter = document.getElementById('genderFilter').value;
+            currentNames = babyNames
+                .filter(name => getNameStatus(name.name) === 'unrated')
+                .filter(name => genderFilter === 'All' || name.gender === genderFilter);
+            
+            // Shuffle array
+            for (let i = currentNames.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [currentNames[i], currentNames[j]] = [currentNames[j], currentNames[i]];
+            }
+            
+            currentIndex = 0;
+            actionHistory = [];
+            displayCurrentName();
+            updateCounts();
+            updateUndoButton();
+        }
+        
+        // Display current name
+        function displayCurrentName() {
+            const nameText = document.getElementById('nameText');
+            const genderText = document.getElementById('genderText');
+            
+            if (currentIndex < currentNames.length) {
+                const name = currentNames[currentIndex];
+                nameText.textContent = name.name;
+                genderText.textContent = name.gender;
+                genderText.style.display = 'block';
+            } else {
+                nameText.textContent = 'No more names!';
+                genderText.textContent = 'Change filter or check your lists';
+                genderText.style.display = 'block';
+            }
+        }
+        
+        // Heart name
+        function heartName() {
+            if (currentIndex < currentNames.length) {
+                const name = currentNames[currentIndex];
+                updateNameStatus(name.name, 'hearted');
+                actionHistory.push({name: name, action: 'hearted', index: currentIndex});
+                currentNames.splice(currentIndex, 1);
+                
+                if (currentIndex >= currentNames.length && currentNames.length > 0) {
+                    currentIndex = currentNames.length - 1;
+                }
+                
+                displayCurrentName();
+                updateCounts();
+                updateUndoButton();
+                animateCard('heart');
+            }
+        }
+        
+        // Reject name
+        function rejectName() {
+            if (currentIndex < currentNames.length) {
+                const name = currentNames[currentIndex];
+                updateNameStatus(name.name, 'rejected');
+                actionHistory.push({name: name, action: 'rejected', index: currentIndex});
+                currentNames.splice(currentIndex, 1);
+                
+                if (currentIndex >= currentNames.length && currentNames.length > 0) {
+                    currentIndex = currentNames.length - 1;
+                }
+                
+                displayCurrentName();
+                updateCounts();
+                updateUndoButton();
+                animateCard('reject');
+            }
+        }
+        
+        // Undo last action
+        function undoLastAction() {
+            if (actionHistory.length > 0) {
+                const lastAction = actionHistory.pop();
+                updateNameStatus(lastAction.name.name, 'unrated');
+                currentNames.splice(lastAction.index, 0, lastAction.name);
+                currentIndex = lastAction.index;
+                displayCurrentName();
+                updateCounts();
+                updateUndoButton();
+            }
+        }
+        
+        // Update counts
+        function updateCounts() {
+            const choices = loadSavedData();
+            let heartedCount = 0;
+            let rejectedCount = 0;
+            
+            for (const [name, status] of Object.entries(choices)) {
+                if (status === 'hearted') heartedCount++;
+                if (status === 'rejected') rejectedCount++;
+            }
+            
+            document.getElementById('heartedCount').textContent = heartedCount;
+            document.getElementById('rejectedCount').textContent = rejectedCount;
+        }
+        
+        // Update undo button
+        function updateUndoButton() {
+            document.getElementById('undoBtn').disabled = actionHistory.length === 0;
+        }
+        
+        // Animate card
+        function animateCard(type) {
+            const card = document.getElementById('nameCard');
+            card.style.transform = type === 'heart' ? 'translateX(100px) rotate(10deg)' : 'translateX(-100px) rotate(-10deg)';
+            card.style.opacity = '0.5';
+            
+            setTimeout(() => {
+                card.style.transform = 'translateX(0) rotate(0)';
+                card.style.opacity = '1';
+            }, 300);
+        }
+        
+        // Show hearted names
+        function showHeartedNames() {
+            currentModalType = 'hearted';
+            document.getElementById('modalTitle').textContent = 'Hearted Names ♥';
+            document.getElementById('modalGenderFilter').value = 'All';
+            showModal();
+            filterModalList();
+        }
+        
+        // Show rejected names
+        function showRejectedNames() {
+            currentModalType = 'rejected';
+            document.getElementById('modalTitle').textContent = 'Rejected Names ✕';
+            document.getElementById('modalGenderFilter').value = 'All';
+            showModal();
+            filterModalList();
+        }
+        
+        // Show modal
+        function showModal() {
+            document.getElementById('nameModal').style.display = 'block';
+        }
+        
+        // Close modal
+        function closeModal() {
+            document.getElementById('nameModal').style.display = 'none';
+        }
+        
+        // Filter modal list
+        function filterModalList() {
+            const genderFilter = document.getElementById('modalGenderFilter').value;
+            const choices = loadSavedData();
+            const nameList = document.getElementById('nameList');
+            
+            const filteredNames = babyNames
+                .filter(name => choices[name.name] === currentModalType)
+                .filter(name => genderFilter === 'All' || name.gender === genderFilter)
+                .sort((a, b) => a.name.localeCompare(b.name));
+            
+            if (filteredNames.length === 0) {
+                nameList.innerHTML = '<div class="empty-state">No names found</div>';
+                return;
+            }
+            
+            nameList.innerHTML = filteredNames.map(name => `
+                <div class="name-item">
+                    <div>
+                        <strong>${name.name}</strong> <span style="color: #666;">(${name.gender})</span>
+                    </div>
+                    <button class="remove-btn" onclick="removeName('${name.name}')">Remove</button>
+                </div>
+            `).join('');
+        }
+        
+        // Remove name from list
+        function removeName(name) {
+            updateNameStatus(name, 'unrated');
+            filterModalList();
+            updateCounts();
+            loadNames(); // Refresh main view
+        }
+        
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            loadNames();
+            updateCounts();
+        });
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('nameModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
