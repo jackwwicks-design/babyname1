@@ -52,8 +52,8 @@
         }
         
         .name-card {
-            width: 300px;
-            height: 400px;
+            width: 260px;
+            height: 320px;
             background: white;
             border-radius: 20px;
             display: flex;
@@ -72,7 +72,7 @@
         }
         
         .name-text {
-            font-size: 3rem;
+            font-size: 2.4rem;
             font-weight: bold;
             color: #333;
             margin-bottom: 20px;
@@ -271,7 +271,7 @@
         
         <div class="card-container">
             <div class="name-card" id="nameCard">
-                <div class="name-text" id="nameText">Loading...</div>Wicks
+                <div class="name-text" id="nameText">Loading...</div>
                 <div class="gender-text" id="genderText"></div>
             </div>
         </div>
@@ -10834,7 +10834,7 @@
             
             if (currentIndex < currentNames.length) {
                 const name = currentNames[currentIndex];
-                nameText.textContent = name.name;
+                nameText.textContent = '${name.name} Wicks';
                 genderText.textContent = name.gender;
                 genderText.style.display = 'block';
             } else {
