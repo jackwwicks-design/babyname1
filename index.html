@@ -21,235 +21,239 @@
         }
         
         .container {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            color: white;
-        }
-        
-        .filter-section {
-            background: white;
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        
-        .card-container {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 20px 0;
-        }
-        
-        .name-card {
-            width: 260px;
-            height: 320px;
-            background: white;
-            border-radius: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            position: relative;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .name-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-        }
-        
-        .name-text {
-            font-size: 2.4rem;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        
-        .gender-text {
-            font-size: 1.2rem;
-            color: #666;
-            background: #f0f0f0;
-            padding: 8px 16px;
-            border-radius: 20px;
-        }
-        
-        .action-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin: 30px 0;
-        }
-        
-        .btn {
-            width: 70px;
-            height: 70px;
-            border: none;
-            border-radius: 50%;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-        
-        .btn:hover {
-            transform: scale(1.1);
-        }
-        
-        .btn:active {
-            transform: scale(0.95);
-        }
-        
-        .reject-btn {
-            background: #f44336;
-            box-shadow: 0 4px 15px rgba(244, 67, 54, 0.4);
-        }
-        
-        .heart-btn {
-            background: #e91e63;
-            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
-        }
-        
-        .control-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        
-        .control-btn {
-            background: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 25px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .control-btn:hover {
-            background: #f5f5f5;
-            transform: translateY(-2px);
-        }
-        
-        .control-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        
-        .view-buttons {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .view-btn {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .hearts-btn {
-            background: #e91e63;
-        }
-        
-        .rejects-btn {
-            background: #f44336;
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
-        }
-        
-        .modal-content {
-            background: white;
-            margin: 10% auto;
-            padding: 20px;
-            width: 90%;
-            max-width: 500px;
-            border-radius: 15px;
-            max-height: 70vh;
-            overflow-y: auto;
-        }
-        
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .close {
-            font-size: 2rem;
-            cursor: pointer;
-            color: #666;
-        }
-        
-        .name-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .name-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background: #f9f9f9;
-            border-radius: 8px;
-        }
-        
-        .remove-btn {
-            background: #666;
-            color: white;
-            border: none;
-            padding: 5px 12px;
-            border-radius: 15px;
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-        
-        select {
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 1rem;
-        }
-        
-        .empty-state {
-            text-align: center;
-            color: #666;
-            font-size: 1.2rem;
-            margin: 50px 0;
-        }
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 10px 15px;
+    min-height: auto; /* removed forcing full viewport height */
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 15px; /* reduced from 30px */
+    color: white;
+}
+
+.filter-section {
+    background: white;
+    border-radius: 12px;
+    padding: 10px 12px; /* reduced from 15px */
+    margin-bottom: 10px; /* reduced from 20px */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.card-container {
+    flex: none; /* prevent stretching */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0; /* reduced margin */
+    height: auto; /* let height shrink */
+}
+
+.name-card {
+    width: 240px; /* smaller width */
+    height: 280px; /* smaller height */
+    background: white;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 10px 15px;
+}
+
+.name-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
+
+.name-text {
+    font-size: 2rem; /* smaller font size */
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px; /* reduced from 20px */
+}
+
+.gender-text {
+    font-size: 1rem; /* smaller font */
+    color: #666;
+    background: #f0f0f0;
+    padding: 5px 10px; /* smaller padding */
+    border-radius: 20px;
+    margin-bottom: 0;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* reduced gap */
+    margin: 15px 0 20px; /* reduced margins */
+}
+
+.btn {
+    width: 60px; /* smaller buttons */
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5rem; /* smaller font */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.btn:hover {
+    transform: scale(1.1);
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.reject-btn {
+    background: #f44336;
+    box-shadow: 0 4px 15px rgba(244, 67, 54, 0.4);
+}
+
+.heart-btn {
+    background: #e91e63;
+    box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
+}
+
+.control-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* smaller gap */
+    margin-top: 15px; /* reduced margin */
+}
+
+.control-btn {
+    background: white;
+    border: none;
+    padding: 10px 16px; /* smaller padding */
+    border-radius: 20px; /* smaller radius */
+    font-size: 0.9rem; /* smaller font */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.control-btn:hover {
+    background: #f5f5f5;
+    transform: translateY(-2px);
+}
+
+.control-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.view-buttons {
+    display: flex;
+    gap: 8px; /* smaller gap */
+}
+
+.view-btn {
+    flex: 1;
+    padding: 12px; /* smaller padding */
+    border: none;
+    border-radius: 10px; /* smaller radius */
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem; /* smaller font */
+}
+
+.hearts-btn {
+    background: #e91e63;
+}
+
+.rejects-btn {
+    background: #f44336;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    margin: 8% auto; /* reduced margin */
+    padding: 15px; /* reduced padding */
+    width: 90%;
+    max-width: 500px;
+    border-radius: 15px;
+    max-height: 60vh; /* reduced height */
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.close {
+    font-size: 2rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.name-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.name-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.remove-btn {
+    background: #666;
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.empty-state {
+    text-align: center;
+    color: #666;
+    font-size: 1.2rem;
+    margin: 50px 0;
+}
     </style>
 </head>
 <body>
@@ -10834,7 +10838,7 @@
             
             if (currentIndex < currentNames.length) {
                 const name = currentNames[currentIndex];
-                nameText.textContent = '${name.name} Wicks';
+                nameText.textContent = `${name.name} Wicks`;
                 genderText.textContent = name.gender;
                 genderText.style.display = 'block';
             } else {
